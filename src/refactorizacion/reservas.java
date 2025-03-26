@@ -1,4 +1,7 @@
 package refactorizacion;
+
+import java.time.LocalDate;
+
 /**
  * @author Gian Calso
  */
@@ -7,7 +10,7 @@ public class reservas {
 	 * atributos de la clase
 	 */
     private int idPista;
-    private String fecha;
+    private LocalDate fecha;
     private int duracion;
 
     /**
@@ -16,7 +19,7 @@ public class reservas {
      * @param fecha fecha de alquiler
      * @param duracion duracion del alquiler
      */
-    public reservas(int idPista, String fecha, int duracion) {
+    public reservas(int idPista, LocalDate fecha, int duracion) {
         this.idPista = idPista;
         this.fecha = fecha;
         this.duracion = duracion;
@@ -34,7 +37,7 @@ public class reservas {
      * devuelve la fecha del alquiler
      * @return fecha del alquiler
      */
-    public String getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 

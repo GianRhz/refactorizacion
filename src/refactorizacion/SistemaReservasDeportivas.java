@@ -1,4 +1,5 @@
 package refactorizacion;
+import java.time.LocalDate;
 /**
  * @author Gian Caser
  */
@@ -29,7 +30,7 @@ public class SistemaReservasDeportivas {
      * @param duracion duracion del reserva
      * @return devuelve true si ha reservado la pista y false en caso contrario
      */
-    public boolean reservarPista(int idPista, String fecha, int duracion) {
+    public boolean reservarPista(int idPista, LocalDate fecha, int duracion) {
         if (idPista < 0 || idPista >= MAX_PISTAS) {
             return false; // ID de pista inválido
         }
@@ -90,7 +91,7 @@ public class SistemaReservasDeportivas {
      * @param hora hora a verificar
      * @return true si esta disponible la pista y false si no
      */
-    public boolean verificarDisponibilidad(int idPista, String fecha, String hora) {
+    public boolean verificarDisponibilidad(int idPista, LocalDate fecha, String hora) {
         if (idPista < 0 || idPista >= MAX_PISTAS) {
             return false; // ID de pista inválido
         }
