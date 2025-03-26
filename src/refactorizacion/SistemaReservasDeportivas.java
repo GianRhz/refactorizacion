@@ -4,23 +4,18 @@ import java.time.LocalDate;
  * @author Gian Caser
  */
 import java.util.ArrayList;
-import java.util.List;
 
 public class SistemaReservasDeportivas {
 
-	/**
-	 * atributo lista reservas
-	 */
-    private List<reservas> reservas;
-    private boolean[] iluminacion;
-    private static final int MAX_PISTAS = 10; // Asumimos un máximo de 10 pistas
+	GestorIlluminacion data = new GestorIlluminacion();
+	static final int MAX_PISTAS = 10; // Asumimos un máximo de 10 pistas
 
     /**
      *  iniciar los atributos
      */
     public SistemaReservasDeportivas() {
-        reservas = new ArrayList<>();
-        iluminacion = new boolean[MAX_PISTAS];
+        data.reservas = new ArrayList<>();
+        data.iluminacion = new boolean[MAX_PISTAS];
     }
 
     /**
@@ -30,16 +25,17 @@ public class SistemaReservasDeportivas {
      * @param duracion duracion del reserva
      * @return devuelve true si ha reservado la pista y false en caso contrario
      */
-    public boolean reservarPista(int idPista, LocalDate fecha, int duracion) {
-        if (idPista < 0 || idPista >= MAX_PISTAS) {
+    public boolean reservarPista(reservas reserva) {
+        if (reserva.getIdPista() < 0 || reserva.getIdPista() >= MAX_PISTAS) {
             return false; // ID de pista inválido
         }
-        for (reservas r : reservas) {
-            if (r.getIdPista() == idPista && r.getFecha().equals(fecha)) {
+        for (reservas r : data.reservas) {
+            LocalDate fecha = null;
+			if (r.getIdPista() == reserva.getIdPista() && esFechaDisponible(fecha, r)) {
                 return false; // La pista ya está reservada en esa fecha
             }
         }
-        reservas.add(new reservas(idPista, fecha, duracion));
+        data.reservas.add(reserva);
         return true;
     }
 
@@ -49,39 +45,13 @@ public class SistemaReservasDeportivas {
      * @return
      */
     public boolean cancelarReserva(int idReserva) {
-        for (int i = 0; i < reservas.size(); i++) {
-            if (reservas.get(i).getIdPista() == idReserva) {
-                reservas.remove(i);
+        for (int i = 0; i < data.reservas.size(); i++) {
+            if (data.reservas.get(i).getIdPista() == idReserva) {
+                data.reservas.remove(i);
                 return true;
             }
         }
         return false; // No se encontró la reserva
-    }
-
-    /**
-     * Activa la iluminacion de la pista
-     * @param idPista id de la pista 
-     * @return true si ha activado la iluminacion y false si no
-     */
-    public boolean activarIluminacion(int idPista) {
-        if (idPista < 0 || idPista >= MAX_PISTAS) {
-            return false; // ID de pista inválido
-        }
-        iluminacion[idPista] = true;
-        return true;
-    }
-
-    /**
-     * desactiva la iluminacion de la pista
-     * @param idPista id de la pista 
-     * @return true si ha desactivado la iluminacion y false si no
-     */
-    public boolean desactivarIluminacion(int idPista) {
-        if (idPista < 0 || idPista >= MAX_PISTAS) {
-            return false; // ID de pista inválido
-        }
-        iluminacion[idPista] = false;
-        return true;
     }
 
     /**
@@ -95,11 +65,15 @@ public class SistemaReservasDeportivas {
         if (idPista < 0 || idPista >= MAX_PISTAS) {
             return false; // ID de pista inválido
         }
-        for (reservas r : reservas) {
-            if (r.getIdPista() == idPista && r.getFecha().equals(fecha)) {
+        for (reservas r : data.reservas) {
+            if (r.getIdPista() == idPista && esFechaDisponible(fecha, r)) {
                 return false; // La pista no está disponible en esa fecha
             }
         }
         return true; // La pista está disponible
     }
+
+	private boolean esFechaDisponible(LocalDate fecha, reservas r) {
+		return r.getFecha().equals(fecha);
+	}
 }

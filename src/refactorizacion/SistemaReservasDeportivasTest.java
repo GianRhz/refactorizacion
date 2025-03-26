@@ -2,23 +2,23 @@ package refactorizacion;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class SistemaReservasDeportivasTest {
-
+static SistemaReservasDeportivas sistemasReservasDeportivas;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-	}
-
-	@Test
-	void testSistemaReservasDeportivas() {
-		fail("Not yet implemented");
+		sistemasReservasDeportivas = new SistemaReservasDeportivas();
 	}
 
 	@Test
 	void testReservarPista() {
-		fail("Not yet implemented");
+		LocalDateTime fecha = LocalDateTime.now();
+		
+		
 	}
 
 	@Test

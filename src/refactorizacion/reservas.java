@@ -12,6 +12,7 @@ public class reservas {
     private int idPista;
     private LocalDate fecha;
     private int duracion;
+	public int getIdPista;
 
     /**
      * constructor de la clase reservas
